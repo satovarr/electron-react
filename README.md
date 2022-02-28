@@ -1,3 +1,8 @@
+# Set-up Desktop app on development
+
+Run on the 1rs terminal "npm start"
+Run on the 2nd terminal "npm run dev"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
