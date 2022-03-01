@@ -8,10 +8,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: isDev ? 2080: 960,
         height: 960,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true
-        }
+        
     })
 
     mainWindow.loadURL('http://localhost:3000/')

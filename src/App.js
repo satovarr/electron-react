@@ -1,50 +1,24 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import "./components/FontawsomeIcons";
+import "./App.css";
 import SimpleTabs from "./components/SimpleTab/index.js";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Table from "./components/Table/index.js";
 
 function App() {
-
-  const [usuarios, setUsuarios] = useState([]);
-  const [tablaUsuarios, setTablaUsuarios] = useState([]);
-  const [busqueda, setBusqueda] = useState("");
-
-  const peticionGet = async () => {
-    await axios.get("https://jsonplaceholder.typicode.com/users")
-      .then(response => {
-        setUsuarios(response.data);
-        setTablaUsuarios(response.data);
-      }).catch(error => {
-        console.log(error);
-      })
-  }
-
-  useEffect(() => {
-    peticionGet();
-  }, [])
-
   return (
-
     <Router>
-
-    <div className="App">
-
-
-      <div className='content'>
+      <div className="App">
+        <div className="content">
+            {//Switch between components by paths
+            }
           <Switch>
-            <Route exact path='/'>
-              
+            <Route exact 
+                path="/"> <SimpleTabs />
             </Route>
-            <Route path='/Tab'>
-              <SimpleTabs/>
+            <Route 
+                path="/Tab"> <SimpleTabs />
             </Route>
-          </Switch>    
-      </div>
-
-      
+          </Switch>
+        </div>
       </div>
     </Router>
   );
