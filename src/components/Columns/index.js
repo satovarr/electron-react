@@ -22,11 +22,11 @@ export const Columnst = [
         Footer: "Gender",
         accessor: "gender"
     }, {
-        Header: "selected1",
+        Header: "Reg15",
         Footer: "selected1",
         accessor: "selected1"
     }, {
-        Header: "selected2",
+        Header: "Reg34",
         Footer: "selected2",
         accessor: "selected2"
     }

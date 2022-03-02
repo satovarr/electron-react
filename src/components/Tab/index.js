@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "../Table";
+import SortTable from "../SortTable";
+import Table from "../Table";
 
 import "./index.css";
 
@@ -8,6 +9,7 @@ import "./index.css";
 const Tab = ({ children, active = 0 }) => {
   const [activeTab, setActiveTab] = useState(active);
   const [tabsData, setTabsData] = useState([]);
+
   const addTab = () => {
     tabsData.push({ tab: `Tab ${tabsData.length + 1}`, children: '' });
 }
@@ -52,8 +54,8 @@ const Tab = ({ children, active = 0 }) => {
       </ul>
 
       <div className="tab-content p-3">
-        <Table>{ activeTab }</Table>
-        {tabsData[activeTab] && tabsData[activeTab].children}
+        <SortTable active={activeTab}></SortTable>
+        
       </div>
     </div>
   );

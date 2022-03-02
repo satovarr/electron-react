@@ -1,13 +1,14 @@
 /** https://www.youtube.com/playlist?list=PLC3y8-rFHvwgWTSrDiwmUsl4ZvipOw9Cz */
 import React, {useMemo, useState, useEffect} from "react";
-import { useTable } from "react-table";
+import { useTable, useRowSelect } from "react-table";
 import MOCK_DATA from '../MOCK_DATA.json'
 import { Columnst } from '../Columns/index'
 import 'bootstrap/dist/css/bootstrap.css';
+import { Checkbox } from "../Checkbox";
 
 var mockTableData = MOCK_DATA;
 
-const Table = ({children, active= 0}) => {
+const SortTable = ({children, active= 0}) => {
     
     const [activeTable, setActiveTable] = useState(active)
     const [tableData, setTableData] = useState(mockTableData[activeTable]['info'])
@@ -19,8 +20,6 @@ const Table = ({children, active= 0}) => {
         
       };
       
-    Table.newTable = newTable;
-
     function updateData () {
         mockTableData[mockTableData.length-1] = mockTableData[1];
         data = tableData;
@@ -32,11 +31,29 @@ const Table = ({children, active= 0}) => {
         getTableBodyProps,
         headerGroups,
         rows,
-        prepareRow
-    } = useTable({
-        columns,
-        data
-    });
+        prepareRow,
+        selectedFlatRows
+    } = useTable(
+    {
+      columns,
+      data
+    },
+    useRowSelect,
+    hooks => {
+      hooks.visibleColumns.push(columns => [
+        {
+          id: 'selection',
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <Checkbox {...getToggleAllRowsSelectedProps()} />
+          ),
+          Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />
+        },
+        ...columns
+      ])
+    }
+  )
+
+    const firstPageRows= rows.slice(0,10)
 
     useEffect(() => {
         updateData(active);
@@ -46,9 +63,6 @@ const Table = ({children, active= 0}) => {
 
     return (
         <>
-            <h1>{active}</h1>
-            <button><a
-            onClick={() => newTable()}></a>add table</button>
             <table className="table" {...getTableProps()}>
                 <thead className="thead-dark">
                     {headerGroups.map(headerGroup => (
@@ -60,7 +74,7 @@ const Table = ({children, active= 0}) => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map(row => {
+                    {firstPageRows.map(row => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
@@ -72,8 +86,18 @@ const Table = ({children, active= 0}) => {
                     })}
                 </tbody>
             </table>
+            <pre>
+                <code>
+                    {JSON.stringify({
+                        selectedFlatRows: selectedFlatRows.map((row)=> row.original),
+                    },
+                    null, 2 
+                    )}
+                </code>
+            </pre>
         </>
     )
 };
 
-export default Table;
+
+export default SortTable;
