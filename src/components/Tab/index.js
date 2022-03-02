@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Table } from "../Table";
 
 import "./index.css";
 
@@ -7,9 +8,8 @@ import "./index.css";
 const Tab = ({ children, active = 0 }) => {
   const [activeTab, setActiveTab] = useState(active);
   const [tabsData, setTabsData] = useState([]);
-  const addContent = () => {
-    tabsData.push({tab: 'TabNew', children: 'New York City '})
-    useEffect()
+  const addTab = () => {
+    tabsData.push({ tab: `Tab ${tabsData.length + 1}`, children: '' });
 }
   useEffect(() => {
     let data = [];
@@ -44,10 +44,7 @@ const Tab = ({ children, active = 0 }) => {
             <a
                 className="nav-link"
                 href="#"
-                onClick={() => {
-                    addContent()
-                    console.log(tabsData)
-                }}
+                onClick={() => addTab()}
             >
               New Tab  
             </a>
@@ -55,6 +52,7 @@ const Tab = ({ children, active = 0 }) => {
       </ul>
 
       <div className="tab-content p-3">
+        <Table>{ activeTab }</Table>
         {tabsData[activeTab] && tabsData[activeTab].children}
       </div>
     </div>
